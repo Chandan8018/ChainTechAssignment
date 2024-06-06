@@ -16,18 +16,16 @@ function Header() {
   const dispatch = useDispatch();
   const { theme } = useSelector((state) => state.theme);
   return (
-    <Navbar fluid rounded>
+    <Navbar
+      fluid
+      className='sticky top-3 mx-14 rounded-2xl md:rounded-full opacity-75'
+    >
       <NavbarBrand href='https://flowbite-react.com'>
-        <img
-          src='https://media0.giphy.com/media/Dwv8Wl7vI1JUuOektL/giphy.gif?cid=6c09b952x6hnij1dfkt64jbuf8zpx3v426vavnvf92t0cfs1&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=g'
-          className='mr-3 h-6 sm:h-9'
-          alt='ChainTech™ App Logo'
-        />
-        <span className='self-center whitespace-nowrap text-xl font-semibold dark:text-white'>
+        <span className='self-center whitespace-nowrap text-xl font-semibold dark:text-white pl-10'>
           ChainTech™
         </span>
       </NavbarBrand>
-      <div className='flex gap-5 md:order-2'>
+      <div className='flex gap-5 md:order-2 pr-10'>
         <Button
           borderRadius='1.75rem'
           className='bg-tansparent text-black dark:text-white border-neutral-200 dark:border-slate-800 w-full md:mr-10'
@@ -52,16 +50,16 @@ function Header() {
           <Link to='/'>Home</Link>
         </NavbarLink>
 
-        <NavbarLink active={path === "/createtodo"} as={"div"}>
-          <Link to='/createtodo'>Create Todo</Link>
+        <NavbarLink active={path === "/service"} as={"div"}>
+          <Link to='/service'>Service</Link>
         </NavbarLink>
 
-        <NavbarLink active={path === "/viewtodo"} as={"div"}>
-          <Link to='/viewtodo'>View Todo</Link>
+        <NavbarLink active={path === "/about"} as={"div"}>
+          <Link to='/about'>About Us</Link>
         </NavbarLink>
 
-        <NavbarLink active={path === "/edit-deltodo"} as={"div"}>
-          <Link to='/edit-deltodo'>Edit & Del Todo</Link>
+        <NavbarLink active={path === "/contact"} as={"div"}>
+          <Link to='/contact'>Contact Us</Link>
         </NavbarLink>
       </NavbarCollapse>
     </Navbar>
