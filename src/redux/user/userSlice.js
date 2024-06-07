@@ -27,15 +27,13 @@ const userSlice = createSlice({
       },
     },
     updateUser: (state, action) => {
-      const { id, firstname, lastname, email, password, confirmpassword } =
-        action.payload;
+      const { id, firstname, lastname, email, password } = action.payload;
       const user = state.users.find((user) => user.id === id);
       if (user) {
         user.fristname = firstname;
         user.lastname = lastname;
         user.email = email;
         user.password = password;
-        user.confirmpassword = confirmpassword;
       }
     },
     deleteUser: (state, action) => {

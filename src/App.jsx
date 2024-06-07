@@ -7,8 +7,8 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/privateroute/PrivateRoute";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (

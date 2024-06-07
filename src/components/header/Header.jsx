@@ -67,7 +67,7 @@ function Header() {
               </span>
             </Dropdown.Header>
 
-            <Link to='/dashboard'>
+            <Link to='/dashboard?tab=dash'>
               <Dropdown.Item className='text-blue-500 font-semibold'>
                 <ImProfile className='w-4 h-4 mr-2' color='blue' />
                 Dashboard
