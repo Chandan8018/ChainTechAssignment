@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 function FooterComp() {
   return (
-    <Footer container className='dark:bg-[#1f2937]'>
+    <Footer container className='bg-gray-400 dark:bg-[#1f2937] opacity-85'>
       <div className='w-full'>
         <div className='grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1'>
           <div className='grid grid-cols-2 md:gap-0 sm:mt-4 md:grid-cols-5 gap-6 '>
@@ -38,9 +38,12 @@ function FooterComp() {
                 +1234&nbsp;456&nbsp;67889
               </span>
             </div>
-            <div>
-              <FooterTitle title='Links' />
-              <FooterLinkGroup col>
+            <div className='text-black dark:text-white'>
+              <FooterTitle
+                title='Links'
+                className='text-black dark:text-white'
+              />
+              <FooterLinkGroup col className='text-black dark:text-white'>
                 <FooterLink>
                   <Link to='/'>Home </Link>
                 </FooterLink>
@@ -58,8 +61,11 @@ function FooterComp() {
             </div>
 
             <div>
-              <FooterTitle title='Legal' />
-              <FooterLinkGroup col>
+              <FooterTitle
+                title='Legal'
+                className='text-black dark:text-white'
+              />
+              <FooterLinkGroup col className='text-black dark:text-white'>
                 <FooterLink href='#'>Terms Of Use</FooterLink>
                 <FooterLink href='#'>Privacy Policy</FooterLink>
                 <FooterLink href='#'>Cookie Policy</FooterLink>
@@ -67,8 +73,11 @@ function FooterComp() {
             </div>
 
             <div>
-              <FooterTitle title='Product' />
-              <FooterLinkGroup col>
+              <FooterTitle
+                title='Product'
+                className='text-black dark:text-white'
+              />
+              <FooterLinkGroup col className='text-black dark:text-white'>
                 <FooterLink href='#'>Take Tour</FooterLink>
                 <FooterLink href='#'>Live Chat</FooterLink>
                 <FooterLink href='#'>Reveiws</FooterLink>
@@ -76,8 +85,11 @@ function FooterComp() {
             </div>
 
             <div>
-              <FooterTitle title='Newsletter' />
-              <FooterLinkGroup col>
+              <FooterTitle
+                title='Newsletter'
+                className='text-black dark:text-white'
+              />
+              <FooterLinkGroup col className='text-black dark:text-white'>
                 <FooterLink href='#'>Stay Up To Date</FooterLink>
                 <FooterLink href='#'>
                   <div className='flex justify-start items-center'>
@@ -103,6 +115,7 @@ function FooterComp() {
             href='#'
             by='ChainTech.Com All Rights Reserved™'
             year={new Date().getFullYear()}
+            className='text-black dark:text-white'
           />
         </div>
       </div>

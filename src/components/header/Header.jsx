@@ -5,7 +5,7 @@ import {
   NavbarLink,
   NavbarToggle,
 } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../redux/theme/themeSlice";
@@ -13,12 +13,13 @@ import { Button } from "../ui/moving-border";
 
 function Header() {
   const path = useLocation().pathname;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { theme } = useSelector((state) => state.theme);
   return (
     <Navbar
       fluid
-      className='sticky top-3 mx-14 rounded-2xl md:rounded-full opacity-75'
+      className='bg-gray-400 sticky top-3 mx-14 rounded-2xl md:rounded-full opacity-85 z-40'
     >
       <NavbarBrand href='https://flowbite-react.com'>
         <span className='self-center whitespace-nowrap text-xl font-semibold dark:text-white pl-10'>
@@ -40,9 +41,11 @@ function Header() {
         <Button
           borderRadius='1.75rem'
           className='bg-transparent border-slate-800 mr-4 text-sm font-semibold text-black dark:text-white'
+          onClick={() => navigate("/sign-in")}
         >
           Sign In
         </Button>
+
         <NavbarToggle />
       </div>
       <NavbarCollapse>
