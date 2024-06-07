@@ -23,9 +23,15 @@ Welcome to the ChainTech Assignment project! This project is designed to showcas
 
 ## Demo
 
-![Home Page](path/to/screenshot.png)
+![Home Page](./src/assets/home.png)
+---
+![Sign Up](./src/assets/signup.png)
+---
+![Sign In](./src/assets/signin.png)
+---
+![Update](./src/assets/update.png)
 
-Try out the live demo: [ChainTech Assignment Demo](https://example.com)
+
 
 ## Installation
 
