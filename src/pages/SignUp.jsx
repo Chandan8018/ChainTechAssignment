@@ -2,22 +2,62 @@ import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { cn } from "../utils/cn";
 import { Spotlight } from "../components/ui/Spotlight";
-import { useSelector } from "react-redux";
 import { Button } from "../components/ui/moving-border";
 import { TypewriterEffectSmooth } from "../components/ui/typewriter-effect";
 import { Word } from "../data/data";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import {
+  signUpStart,
+  signUpSuccess,
+  signUpFailure,
+  createUser,
+} from "../redux/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { Alert, Spinner } from "flowbite-react";
 
 function SignUp() {
-  const { theme } = useSelector((state) => state.theme);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { theme } = useSelector((state) => state.theme);
+  const userState = useSelector((state) => state.user);
   const [formData, setFormData] = useState({});
+
+  const { loading, error: errorMessage } = userState || {
+    loading: false,
+    error: null,
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    if (
+      !formData.firstname ||
+      !formData.lastname ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmpassword
+    ) {
+      return dispatch(signUpFailure("Please fill out all fields"));
+    }
+    if (formData.password !== formData.confirmpassword) {
+      return dispatch(signUpFailure("Passwords do not match"));
+    }
+    try {
+      dispatch(signUpStart());
+      dispatch(createUser(formData));
+      dispatch(signUpSuccess());
+      setFormData({});
+      navigate("/sign-in");
+    } catch (error) {
+      dispatch(signUpFailure("Failed to sign up"));
+      console.log(error);
+    }
   };
+
   return (
     <div className='h-[50rem] w-full dark:bg-black bg-white dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex justify-center items-center'>
       {/* Spot Light */}
@@ -27,16 +67,19 @@ function SignUp() {
       />
       {/* Radial gradient for the container to give a faded look */}
       <div className='absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]'></div>
-      {/* Log In Form */}
+      {/* Sign Up Form */}
       <div className='max-w-3xl w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-[#abb1bb] dark:bg-[#1a232f] '>
         <div className='flex justify-center'>
           <TypewriterEffectSmooth words={Word} />
         </div>
         <p className='text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300'>
-          Login to aceternity if you can because we don&apos;t have a login flow
-          yet
+          Create an account to access our features
         </p>
-
+        {errorMessage && (
+          <Alert className='mt-5' color='failure'>
+            {errorMessage}
+          </Alert>
+        )}
         <form className='my-8' onSubmit={handleSubmit}>
           <div className='flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4'>
             <LabelInputContainer>
@@ -45,9 +88,7 @@ function SignUp() {
                 id='firstname'
                 placeholder='Tyler'
                 type='text'
-                onChange={(e) =>
-                  setFormData({ ...formData, firstname: e.target.value })
-                }
+                onChange={handleChange}
               />
             </LabelInputContainer>
             <LabelInputContainer>
@@ -56,9 +97,7 @@ function SignUp() {
                 id='lastname'
                 placeholder='Durden'
                 type='text'
-                onChange={(e) =>
-                  setFormData({ ...formData, lastname: e.target.value })
-                }
+                onChange={handleChange}
               />
             </LabelInputContainer>
           </div>
@@ -68,9 +107,7 @@ function SignUp() {
               id='email'
               placeholder='name@company.com'
               type='email'
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
+              onChange={handleChange}
             />
           </LabelInputContainer>
           <LabelInputContainer className='mb-4'>
@@ -79,20 +116,16 @@ function SignUp() {
               id='password'
               placeholder='••••••••'
               type='password'
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
+              onChange={handleChange}
             />
           </LabelInputContainer>
           <LabelInputContainer className='mb-8'>
-            <Label htmlFor='password'>Confirm password</Label>
+            <Label htmlFor='confirmpassword'>Confirm password</Label>
             <Input
               id='confirmpassword'
               placeholder='••••••••'
               type='password'
-              onChange={(e) =>
-                setFormData({ ...formData, confirmpassword: e.target.value })
-              }
+              onChange={handleChange}
             />
           </LabelInputContainer>
 
@@ -101,7 +134,15 @@ function SignUp() {
             className='bg-gray-600 dark:bg-slate-400 text-white dark:text-black border-neutral-200 dark:border-slate-800 w-full text-md font-semibold'
             type='submit'
           >
-            Sign Up &rarr;
+            {loading ? (
+              <>
+                <Spinner size='sm' />
+                <span className='pl-3'>Loading...</span>
+              </>
+            ) : (
+              "Sign Up"
+            )}
+
             <BottomGradient />
           </Button>
 
