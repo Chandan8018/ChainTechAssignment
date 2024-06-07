@@ -1,4 +1,6 @@
 import {
+  Avatar,
+  Dropdown,
   Navbar,
   NavbarBrand,
   NavbarCollapse,
@@ -6,16 +8,19 @@ import {
   NavbarToggle,
 } from "flowbite-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FaMoon, FaSignOutAlt, FaSun, FaUserCheck } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../redux/theme/themeSlice";
 import { Button } from "../ui/moving-border";
+import { ImProfile } from "react-icons/im";
+import { signoutSuccess } from "../../redux/user/userSlice";
 
 function Header() {
   const path = useLocation().pathname;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { theme } = useSelector((state) => state.theme);
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <Navbar
       fluid
@@ -38,13 +43,59 @@ function Header() {
             <FaMoon className='w-5 h-5' />
           )}
         </Button>
-        <Button
-          borderRadius='1.75rem'
-          className='bg-transparent border-slate-800 mr-4 text-sm font-semibold text-black dark:text-white'
-          onClick={() => navigate("/sign-in")}
-        >
-          Sign In
-        </Button>
+        {currentUser ? (
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <Avatar
+                alt='user'
+                img='https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg'
+                rounded
+                className='h-8 w-10'
+              />
+            }
+          >
+            <Dropdown.Header>
+              <FaUserCheck className='w-10 h-10' color='navy' />
+
+              <span className='block text-md font-bold text-black truncate'>
+                @{currentUser.firstname + " " + currentUser.lastname}
+              </span>
+              <span className='block text-sm font-medium text-black truncate'>
+                {currentUser.email}
+              </span>
+            </Dropdown.Header>
+
+            <Link to='/dashboard'>
+              <Dropdown.Item className='text-blue-500 font-semibold'>
+                <ImProfile className='w-4 h-4 mr-2' color='blue' />
+                Dashboard
+              </Dropdown.Item>
+            </Link>
+
+            <Dropdown.Divider />
+
+            <Dropdown.Item
+              className='text-red-500 font-semibold'
+              onClick={() => {
+                dispatch(signoutSuccess());
+                navigate("/");
+              }}
+            >
+              <FaSignOutAlt className='w-4 h-4 mr-2' color='red' />
+              Sign out
+            </Dropdown.Item>
+          </Dropdown>
+        ) : (
+          <Button
+            borderRadius='1.75rem'
+            className='bg-transparent border-slate-800 mr-4 text-sm font-semibold text-black dark:text-white'
+            onClick={() => navigate("/sign-in")}
+          >
+            Sign In
+          </Button>
+        )}
 
         <NavbarToggle />
       </div>
