@@ -22,3 +22,10 @@ export const update = [
     className: "text-blue-500 dark:text-blue-500",
   },
 ];
+
+export const home = [
+  {
+    text: "ChainTech.",
+    className: "text-blue-500 dark:text-blue-500",
+  },
+];
