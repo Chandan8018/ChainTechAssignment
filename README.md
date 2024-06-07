@@ -11,7 +11,6 @@ Welcome to the ChainTech Assignment project! This project is designed to showcas
 - [Folder Structure](#folder-structure)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
