@@ -30,7 +30,7 @@ const userSlice = createSlice({
       const { id, firstname, lastname, email, password } = action.payload;
       const user = state.users.find((user) => user.id === id);
       if (user) {
-        user.fristname = firstname;
+        user.firstname = firstname;
         user.lastname = lastname;
         user.email = email;
         user.password = password;
