@@ -2,21 +2,60 @@ import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { cn } from "../utils/cn";
 import { Spotlight } from "../components/ui/Spotlight";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "../components/ui/moving-border";
 import { Word } from "../data/data";
 import { TypewriterEffectSmooth } from "../components/ui/typewriter-effect";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { selectUsers } from "../redux/user/userSlice";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../redux/user/userSlice";
+import { Alert, Spinner } from "flowbite-react";
 
 function SignIn() {
-  const { theme } = useSelector((state) => state.theme);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { theme } = useSelector((state) => state.theme);
+  const userState = useSelector((state) => state.user);
+  const users = useSelector(selectUsers);
   const [formData, setFormData] = useState({});
+
+  const { loading, error: errorMessage } = userState || {
+    loading: false,
+    error: null,
+  };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    if (!formData.email || !formData.password) {
+      return dispatch(signInFailure("Please fill out all fields"));
+    }
+    try {
+      dispatch(signInStart());
+      const user = users.find(
+        (user) =>
+          user.email === formData.email && user.password === formData.password
+      );
+
+      if (user) {
+        dispatch(signInSuccess(user));
+        navigate("/dashboard");
+        setFormData({});
+      } else {
+        return dispatch(signInFailure("Invalid email or password"));
+      }
+    } catch (error) {
+      dispatch(signInFailure("Failed to sign in"));
+      console.log(error);
+    }
   };
   return (
     <div className='h-[50rem] w-full dark:bg-black bg-white dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex justify-center items-center'>
@@ -36,7 +75,11 @@ function SignIn() {
           Login to aceternity if you can because we don&apos;t have a login flow
           yet
         </p>
-
+        {errorMessage && (
+          <Alert className='mt-5' color='failure'>
+            {errorMessage}
+          </Alert>
+        )}
         <form className='my-8' onSubmit={handleSubmit}>
           <LabelInputContainer className='mb-4'>
             <Label htmlFor='email'>Email Address</Label>
@@ -44,9 +87,7 @@ function SignIn() {
               id='email'
               placeholder='name@company.com'
               type='email'
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
+              onChange={handleChange}
             />
           </LabelInputContainer>
 
@@ -56,9 +97,7 @@ function SignIn() {
               id='password'
               placeholder='••••••••'
               type='password'
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
+              onChange={handleChange}
             />
           </LabelInputContainer>
 
@@ -67,7 +106,14 @@ function SignIn() {
             className='bg-gray-600 dark:bg-slate-400 text-white dark:text-black border-neutral-200 dark:border-slate-800 w-full text-md font-semibold'
             type='submit'
           >
-            Sign In &rarr;
+            {loading ? (
+              <>
+                <Spinner size='sm' />
+                <span className='pl-3'>Loading...</span>
+              </>
+            ) : (
+              "Sign In"
+            )}
             <BottomGradient />
           </Button>
 
