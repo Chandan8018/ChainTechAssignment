@@ -27,7 +27,7 @@ function Header() {
       className='bg-gray-400 sticky md:top-3 md:mx-14 md:rounded-full opacity-85 z-40'
     >
       <NavbarBrand href='https://flowbite-react.com'>
-        <span className='self-center whitespace-nowrap text-xl font-semibold dark:text-white pl-10'>
+        <span className='self-center whitespace-nowrap text-xl font-semibold dark:text-white md:pl-10'>
           ChainTech™
         </span>
       </NavbarBrand>
