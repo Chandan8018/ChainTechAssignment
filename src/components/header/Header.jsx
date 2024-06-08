@@ -31,7 +31,7 @@ function Header() {
           ChainTech™
         </span>
       </NavbarBrand>
-      <div className='flex gap-5 md:order-2 pr-10'>
+      <div className='flex gap-5 md:order-2 md:pr-10'>
         <Button
           borderRadius='1.75rem'
           className='bg-tansparent text-black dark:text-white border-neutral-200 dark:border-slate-800 w-full mr-10'
