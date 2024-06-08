@@ -24,7 +24,7 @@ function Header() {
   return (
     <Navbar
       fluid
-      className='bg-gray-400 sticky top-3 mx-14 rounded-2xl md:rounded-full opacity-85 z-40'
+      className='bg-gray-400 sticky md:top-3 md:mx-14 md:rounded-full opacity-85 z-40'
     >
       <NavbarBrand href='https://flowbite-react.com'>
         <span className='self-center whitespace-nowrap text-xl font-semibold dark:text-white pl-10'>
@@ -34,7 +34,7 @@ function Header() {
       <div className='flex gap-5 md:order-2 pr-10'>
         <Button
           borderRadius='1.75rem'
-          className='bg-tansparent text-black dark:text-white border-neutral-200 dark:border-slate-800 w-full md:mr-10'
+          className='bg-tansparent text-black dark:text-white border-neutral-200 dark:border-slate-800 w-full mr-10'
           onClick={() => dispatch(toggleTheme())}
         >
           {theme === "light" ? (
